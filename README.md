@@ -5,9 +5,9 @@ A web service for generating math problem sets.
 
 Dependencies
 ============
-Python 3.4
-Flask
-SymPy
+- Python 3.4
+- Flask
+- SymPy
 
 Routes
 ======
