@@ -37,7 +37,7 @@
                         "short_name": "Solving right triangles using cosine."
                     },
                     "solving_for_an_angle_of_a_right_triangle_using_cos_sin_or_tan": {
-                        "enabled": true,
+                        "enabled": false,
                         "short_name": "Solving for an angle of a right triangle using cos, sin, or tan. "
                     },
                     "polar_to_vector_component": {
@@ -65,7 +65,7 @@
                         "short_name": "Convert from common radians to degrees. "
                     },
                     "convert_from_common_degrees_to_radians": {
-                        "enabled": true,
+                        "enabled": false,
                         "short_name": "Convert from common degrees to radians. "
                     },
                     "law_of_sines_find_the_two_angles": {
@@ -271,7 +271,7 @@
                 "short_name": "Exponents and Logarithmic Functions",
                 "skills": {
                     "evaluate_natural_logarithms": {
-                        "enabled": true,
+                        "enabled": false,
                         "short_name": "Evaluate natural logarithms."
                     },
                     "quotient_property_of_logarithms": {
@@ -319,7 +319,7 @@
                         "short_name": "Graph an exponential decay function."
                     },
                     "expanding_fractional_exponents_with_variables": {
-                        "enabled": true,
+                        "enabled": false,
                         "short_name": "Expanding fractional exponents with variables."
                     },
                     "power_property_of_natural_logarithms": {
@@ -453,7 +453,7 @@
                         "short_name": "Translate a graph of a linear equation."
                     },
                     "graphing_equations": {
-                        "enabled": true,
+                        "enabled": false,
                         "short_name": "Graphing equations."
                     },
                     "inverse_variation_given_a_table_find_k": {
@@ -848,47 +848,47 @@
                 "short_name": "Arithmetic",
                 "skills": {
                     "addition_word_problems": {
-                        "enabled": false,
+                        "enabled": true,
                         "short_name": "Addition word problems."
                     },
                     "order_of_operations": {
-                        "enabled": false,
+                        "enabled": true,
                         "short_name": "Order of operations."
                     },
                     "multiplication_word_problem": {
-                        "enabled": false,
+                        "enabled": true,
                         "short_name": "Multiplication word problem."
                     },
                     "subtraction_word_problem": {
-                        "enabled": false,
+                        "enabled": true,
                         "short_name": "Subtraction word problem."
                     },
                     "order_of_operations_ii": {
-                        "enabled": false,
+                        "enabled": true,
                         "short_name": "Order of operations II."
                     },
                     "multiplication": {
-                        "enabled": false,
+                        "enabled": true,
                         "short_name": "Multiplication."
                     },
                     "division": {
-                        "enabled": false,
+                        "enabled": true,
                         "short_name": "Division."
                     },
                     "subtraction": {
-                        "enabled": false,
+                        "enabled": true,
                         "short_name": "Subtraction."
                     },
                     "order_of_operations_with_absolute_values": {
-                        "enabled": false,
+                        "enabled": true,
                         "short_name": "Order of operations with absolute values."
                     },
                     "division_word_problem": {
-                        "enabled": false,
+                        "enabled": true,
                         "short_name": "Division word problem."
                     },
                     "addition": {
-                        "enabled": false,
+                        "enabled": true,
                         "short_name": "Addition."
                     }
                 }
@@ -2905,7 +2905,7 @@
                         "short_name": "Ratio word problem II."
                     },
                     "converting_simple_english_lengths_word_problem": {
-                        "enabled": true,
+                        "enabled": false,
                         "short_name": "Converting simple English lengths word problem."
                     },
                     "solving_proportions_simple_values": {
