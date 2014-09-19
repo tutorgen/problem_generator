@@ -1,5 +1,7 @@
+import random
+import sympy
 
-def addition():
+def addition(digits=2, values=2):
     pass
 
 def addition_word_problems():

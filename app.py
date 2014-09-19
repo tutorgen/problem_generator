@@ -1,16 +1,14 @@
 import json
 from markdown import markdown
 from flask import Flask, render_template, jsonify, abort
-from utils import load_problem_data, load_problem_library, calculated_enabled_data, load_readme
+from utils import load_problem_data, load_readme
+from generator import ProblemGenerator
+
 app = Flask(__name__)
 
-APP_DATA = load_problem_data()
 README = load_readme()
-PROBLEM_LIBRARY = load_problem_library()
-ENABLED_DATA = calculated_enabled_data(APP_DATA, PROBLEM_LIBRARY)
-
-def generate_problem(subject=None, category=None, skill=None):
-    pass
+APP_DATA = load_problem_data()
+generator = ProblemGenerator(APP_DATA)
 
 
 @app.route("/")
@@ -36,30 +34,30 @@ def todo():
 
 @app.route("/list")
 def all_list():
-    return jsonify(ENABLED_DATA)
+    return jsonify(generator.enabled_data)
 
 
 @app.route("/subject/list")
 def subject_list():
-    return jsonify({'subjects': [name for name in ENABLED_DATA.keys()]})
+    return jsonify({'subjects': [name for name in generator.enabled_data.keys()]})
 
 
 @app.route("/<subject>/new")
 def subject_new(subject=None):
-    if subject not in ENABLED_DATA or subject is None:
+    if subject not in generator.enabled_data or subject is None:
         abort(404)
 
-    subject = ENABLED_DATA[subject]
+    subject = generator.enabled_data[subject]
 
     return jsonify({})
 
 
 @app.route("/<subject>/category/list")
 def subject_category_list(subject=None):
-    if subject not in ENABLED_DATA or subject is None:
+    if subject not in generator.enabled_data or subject is None:
         abort(404)
 
-    subject = ENABLED_DATA[subject]
+    subject = generator.enabled_data[subject]
 
     return jsonify({'categories': [name for name in subject['categories'].keys()]})
 
@@ -71,10 +69,10 @@ def subject_category_new(subject=None, category=None):
 
 @app.route("/<subject>/<category>/skill/list")
 def subject_category_skill_list(subject=None, category=None):
-    if subject not in ENABLED_DATA or subject is None or category is None:
+    if subject not in generator.enabled_data or subject is None or category is None:
         abort(404)
 
-    subject = ENABLED_DATA[subject]
+    subject = generator.enabled_data[subject]
 
     if category not in subject['categories']:
         abort(404)
@@ -86,10 +84,10 @@ def subject_category_skill_list(subject=None, category=None):
 
 @app.route("/<subject>/<category>/<skill>/new")
 def subject_category_skill_new():
-    if subject not in ENABLED_DATA or subject is None or category is None:
+    if subject not in generator.enabled_data or subject is None or category is None:
         abort(404)
 
-    subject = ENABLED_DATA[subject]
+    subject = generator.enabled_data[subject]
 
     if category not in subject['categories']:
         abort(404)
