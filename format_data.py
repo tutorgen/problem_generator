@@ -9,15 +9,12 @@ slug.separator = '_'
 problems = {
    k : {
         'short_name': v['short_name'],
-        'enabled': False,
         'categories': {
             slug(kc): {
                 'short_name': kc,
-                'enabled': False,
                 'skills': {
                     slug(skill): { 
                         'short_name': skill, 
-                        'enabled': False
                     } for skill in vc 
                 }
             } for kc, vc in v['categories'].items()

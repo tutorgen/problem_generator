@@ -29,6 +29,7 @@ Routes
 
 route                          | options   | description 
 -------------------------------|-----------|-------------
+/list                          |           | List everything supported
 /subject/list                  |           | List the subjects supported
 /:subject/category/list        |           | List the categories supported for a specific subject
 /:subject/:category/skill/list |           | List the skills supported for a specific subject and category

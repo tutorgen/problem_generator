@@ -1,47 +1,37 @@
 import json
 from markdown import markdown
 from flask import Flask, render_template, jsonify, abort
+from utils import load_problem_data, load_problem_library, calculated_enabled_data, load_readme
 app = Flask(__name__)
 
-APP_DATA = None
-ENABLED_DATA = None
+APP_DATA = load_problem_data()
+README = load_readme()
+PROBLEM_LIBRARY = load_problem_library()
+ENABLED_DATA = calculated_enabled_data(APP_DATA, PROBLEM_LIBRARY)
 
-with open('data.json') as f:
-    APP_DATA = json.loads(f.read())
+def generate_problem(subject=None, category=None, skill=None):
+    pass
 
-for sub_name, subject in APP_DATA.items():
-    sub_en = False
-    for category in subject['categories'].values():
-        category['enabled'] = cat_en = any([sk['enabled'] for sk in category['skills'].values()])
-
-        if cat_en:
-            sub_en = True
-
-    subject['enabled'] = sub_en
-
-ENABLED_DATA = {
-    sub_name: {
-        'short_name': subject['short_name'],
-        'categories': {
-            cat_name: {
-                'short_name': category['short_name'],
-                'skills': {
-                    sk_name: {
-                        'short_name': skill['short_name'] 
-                    } for sk_name, skill in category['skills'].items() if skill['enabled']
-                }
-            } for cat_name, category in subject['categories'].items() if category['enabled']
-        }
-    } for sub_name, subject in APP_DATA.items() if subject['enabled']
-}
-
-README = None
-with open('README.md') as f:
-    README = markdown(f.read(), extensions=['tables'])
 
 @app.route("/")
 def index():
     return render_template('index.html', readme=README)
+
+
+@app.route("/todo")
+def todo():
+
+    todo_data = []
+    for sub_name, subject in APP_DATA.items():
+        for cat_name, category in subject['categories'].items():
+            if not all([sk['enabled'] for sk in category['skills'].values()]):
+                todo_data.append({
+                    'subject': sub_name, 
+                    'category': cat_name, 
+                    'points': len(category['skills']) * 2
+                })
+
+    return jsonify({'todo': todo_data})
 
 
 @app.route("/list")
@@ -105,7 +95,7 @@ def subject_category_skill_new():
         abort(404)
 
     category = subject['categories'][category]
-    
+
     return jsonify({})
 
 
