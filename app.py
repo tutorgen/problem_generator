@@ -1,6 +1,6 @@
 import json
 from markdown import markdown
-from flask import Flask, render_template, jsonify, abort
+from flask import Flask, request, render_template, jsonify, abort
 from utils import load_problem_data, load_readme
 from generator import ProblemGenerator
 
@@ -32,12 +32,12 @@ def todo():
     return jsonify({'todo': todo_data})
 
 
-@app.route("/list")
+@app.route("/all")
 def all_list():
     return jsonify(generator.enabled_data)
 
 
-@app.route("/subject/list")
+@app.route("/list")
 def subject_list():
     return jsonify({'subjects': [name for name in generator.enabled_data.keys()]})
 
@@ -52,7 +52,7 @@ def subject_new(subject=None):
     return jsonify({})
 
 
-@app.route("/<subject>/category/list")
+@app.route("/<subject>/list")
 def subject_category_list(subject=None):
     if subject not in generator.enabled_data or subject is None:
         abort(404)
@@ -67,7 +67,7 @@ def subject_category_new(subject=None, category=None):
     return jsonify({})
 
 
-@app.route("/<subject>/<category>/skill/list")
+@app.route("/<subject>/<category>/list")
 def subject_category_skill_list(subject=None, category=None):
     if subject not in generator.enabled_data or subject is None or category is None:
         abort(404)
@@ -83,18 +83,15 @@ def subject_category_skill_list(subject=None, category=None):
 
 
 @app.route("/<subject>/<category>/<skill>/new")
-def subject_category_skill_new():
+def subject_category_skill_new(subject=None, category=None, skill=None):
     if subject not in generator.enabled_data or subject is None or category is None:
         abort(404)
 
-    subject = generator.enabled_data[subject]
+    problem = generator.generate_problem(subject, category, skill, **dict(request.args))
 
-    if category not in subject['categories']:
-        abort(404)
-
-    category = subject['categories'][category]
-
-    return jsonify({})
+    return jsonify({
+        'problem': problem
+        })
 
 
 if __name__ == "__main__":

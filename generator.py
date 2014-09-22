@@ -97,37 +97,34 @@ class ProblemGenerator:
                 }
 
 
-    def generate_problem(subject=None, category=None, skill=None):
+    def generate_problem(self, subject=None, category=None, skill=None, **kwargs):
         if subject is None:
-            subject = random.choice(self.problem_library.keys())
+            subject = random.choice(list(self.problem_library.keys()))
         elif subject not in self.problem_library:
             raise Exception("Subject is invalid.")
 
         subject_obj = self.problem_library[subject]
 
         if category is None:
-            category = random.choice(subject_obj['categories'].keys())
-        elif category not in subject_obj['categories']:
+            category = random.choice(list(subject_obj.keys()))
+        elif category not in subject_obj:
             raise Exception("Category is invalid.")
 
-        category_obj = subject_obj['categories'][category]
+        category_obj = subject_obj[category]
 
         if skill is None:
-            skill = random.choice(category_obj['skills'].keys())
-        elif skill not in category_obj['skills']:
+            skill = random.choice(list(category_obj.keys()))
+        elif skill not in category_obj:
             raise Exception("Skill is invalid.")
 
-        skill_obj = category['skills'][skill]
+        skill_obj = category_obj[skill]
 
-        problem_text, answer_text = skill()
+        problem_text, answer_text = skill_obj(**kwargs)
 
         return {
             'subject': subject,
-            'subject_description': subject_obj['short_name'],
             'category': category,
-            'category_description': category_obj['short_name'],
             'skill': skill,
-            'skill_description': skill_obj['short_name'],
             'problem_text': problem_text,
             'answer_text': answer_text
         }
