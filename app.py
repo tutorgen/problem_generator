@@ -87,10 +87,19 @@ def subject_category_skill_new(subject=None, category=None, skill=None):
     if subject not in generator.enabled_data or subject is None or category is None:
         abort(404)
 
-    problem = generator.generate_problem(subject, category, skill, **dict(request.args))
+    request_args = dict(request.args)
+
+    count = 1
+    if 'count' in request.args:
+        count = int(request.args['count'])
+        del request_args['count']
+
+    problems = []
+    for i in range(0, count):
+        problems.append(generator.generate_problem(subject, category, skill, **request_args))
 
     return jsonify({
-        'problem': problem
+        'problems': problems
         })
 
 
